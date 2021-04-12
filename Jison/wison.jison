@@ -6,7 +6,7 @@
 //Comentarios de linea
 "#".*   //Comentario de linea
 //Comentario de Bloque
-//[/][*][*]
+[/][*][*][^*]*[*]+([^/*][^*]*[*]+)*[/] //Comentario de Bloque
 
 
 
@@ -38,7 +38,7 @@
 //Expresiones Especiales
 [$][_]([a-zA-Z]|[0-9]|[_])+     return 'TERMINAL_SYM'
 [%][_]([a-zA-Z]|[0-9]|[_])+     return 'NO_TERMINAL_SYM'
-[\'][^\']+[\']                     return 'PR'
+([\']|[\‘]|[\’])([^\' \‘ \’]+)([\']|[\‘]|[\’])                    return 'PR'
 
 
 <<EOF>>     return 'EOF'
