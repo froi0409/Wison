@@ -1,5 +1,3 @@
-
-
 Wison ¿
 Lex {:
        
@@ -14,10 +12,10 @@ Lex {:
     Terminal $_NUMEROS   <- [0-9]* ; 
     Terminal $_NUMEROS_2 <- [0-9]+ ;
     Terminal $_NUMEROS_3 <- [0-9]? ; 
-    Terminal $_Decimal   <- ([0-9]*)($_Punto)($_NUMEROS_2);
+    Terminal $_Decimal   <- ([0-9]*)($_Punto)($_NUMEROS_2); #este es otro comentario de linea
 
 :} 
-
+#este es un comentario de linea
 
 Syntax {{:
 
@@ -32,7 +30,7 @@ Syntax {{:
    
    %_S <= %_Prod_A $_FIN ;
    %_Prod_A <= $_P_Ab %_Prod_B $_P_Ce ;
-   %_Prod_B <= %_Prod_B %Prod_C | %_Prod_C ;
+   %_Prod_B <= %_Prod_B %_Prod_C | %_Prod_C ;
    %_Prod_C <= $_Una_A $_Mas $_Una_A ;
 :}}
 

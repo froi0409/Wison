@@ -1,15 +1,14 @@
 %lex
 
-%options case-sensitive
-
 %%
 //A partir de aquí declaramos los tokens a utilizar
-[ \r\t\n]   
-
+[ \r\t\n]   {}
 //Comentarios de linea
-//"#".*
+"#".*   //Comentario de linea
 //Comentario de Bloque
 //[/][*][*]
+
+
 
 //Simbolos fundamentales
 "¿"         return 'INTER_A'
@@ -24,24 +23,22 @@
 [+]         return 'MAS'
 [(]         return 'PAR_A'
 [)]         return 'PAR_C'      
-[|]         return 'OR'           
-([) ("aA-zZ") (])    return 'ALL_LETTERS'
-([) ("0-9") (])     return 'DIGIT'
-
+[|]         return 'OR'
+(("[")("aA-zZ")("]"))   return 'ALL_LETTERS'
+(("[")("0-9")("]"))    return 'DIGIT'
 
 //Palabras Reservadas
-"Wison"         return 'WISON'
-"Terminal"      return 'TERMINAL'
-"Lex"           return 'LEX'
-"Syntax"        return 'SYNTAX'
-"No_Terminal"   return 'NO_TERMINAL'
-"Initial_Sim"   return 'INITIAL_SIM'
-
+(Wison)         return 'WISON'
+(Terminal)      return 'TERMINAL'
+[L][e][x]             return 'LEX'
+(Syntax)        return 'SYNTAX'
+(No_Terminal)   return 'NO_TERMINAL'
+(Initial_Sim)   return 'INITIAL_SIM'
 
 //Expresiones Especiales
 [$][_]([a-zA-Z]|[0-9]|[_])+     return 'TERMINAL_SYM'
 [%][_]([a-zA-Z]|[0-9]|[_])+     return 'NO_TERMINAL_SYM'
-['][^\'][']                     return 'PR'
+[\'][^\']+[\']                     return 'PR'
 
 
 <<EOF>>     return 'EOF'
@@ -64,7 +61,7 @@ inicio_wison :  WISON INTER_A definicion_lexica definicion_sintactica INTER_C WI
                 ;
 
 //Inicio de la definición léxica
-definicion_lexica : LEX LLA_A PUNTOS cuerpo_definicion_lexica PUNTOS LLA_A
+definicion_lexica : LEX LLA_A PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C
                     ;
 
 cuerpo_definicion_lexica :  cuerpo_definicion_lexica definicion_terminal
