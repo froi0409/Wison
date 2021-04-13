@@ -58,6 +58,8 @@ inicio :    inicio_wison EOF
             ;
 
 inicio_wison :  WISON INTER_A definicion_lexica definicion_sintactica INTER_C WISON
+                | error definicion_lexica definicion_sintactica INTER_C WISON           { console.error('Error Sintáctico. Se esperaba exactamente \'WISON ¿\'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+                | WISON INTER_A definicion_lexica definicion_sintactica error           { console.error('Error Sintáctico. Se esperaba exactamente \'? WISON\'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
                 ;
 
 //Inicio de la definición léxica
