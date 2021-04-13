@@ -1,0 +1,14 @@
+.contenedor {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+.areaTexto {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 4px;
+}
+.wisonArea {
+    width: 99%;
+    height: 500px;
+}

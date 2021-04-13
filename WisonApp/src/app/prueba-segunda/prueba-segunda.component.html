@@ -1,0 +1,9 @@
+<p>Nombre: {{nombre}}</p>
+<p>Apellido: {{apellido}}</p>
+<p>Edad: {{edad}}</p>
+<p>Empresa: {{empresa.value}}</p>
+
+Introduzca la empresa <input type="text" #empresa>
+<br><br>
+
+<input type="button" value="Ingresar" (click)="llamaEmpresa(empresa.value)"/>
