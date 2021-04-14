@@ -18,6 +18,6 @@ import { WisonAreaComponent } from './wison-area/wison-area.component';
     BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent, WisonAreaComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

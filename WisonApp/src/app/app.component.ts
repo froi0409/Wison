@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as wisonParser from '../assets/wison.js';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,19 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'WisonApp';
   informacion = 'Editor de Texto';
+  constructor() {
+
+  }
+
+  ngOnInit() {
+
+  }
+
+  parsear(entrada:string) {
+    //var parserWison = wisonParser;
+    console.log("entrada: ");
+    console.log(entrada);
+    //parserWison.parse(entrada);
+  }
+
 }

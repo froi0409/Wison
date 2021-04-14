@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "WisonApp": {
+    "WisonAngularApp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/WisonApp",
+            "outputPath": "dist/WisonAngularApp",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,15 +28,9 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css"
             ],
-            "scripts": [
-              "src/assets/wison.js",
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/@popperjs/core/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -71,18 +65,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "WisonApp:build"
+            "browserTarget": "WisonAngularApp:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "WisonApp:build:production"
+              "browserTarget": "WisonAngularApp:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "WisonApp:build"
+            "browserTarget": "WisonAngularApp:build"
           }
         },
         "test": {
@@ -97,7 +91,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -120,16 +113,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "WisonApp:serve"
+            "devServerTarget": "WisonAngularApp:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "WisonApp:serve:production"
+              "devServerTarget": "WisonAngularApp:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "WisonApp"
+  "defaultProject": "WisonAngularApp"
 }
