@@ -72,39 +72,81 @@
   }
 */
 var wison = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,9],$V1=[1,8],$V2=[1,12],$V3=[1,18],$V4=[2,13,17],$V5=[2,10],$V6=[2,22],$V7=[1,53],$V8=[1,50],$V9=[1,51],$Va=[1,58],$Vb=[21,27],$Vc=[2,28],$Vd=[1,66],$Ve=[1,67],$Vf=[1,68],$Vg=[21,26],$Vh=[39,41],$Vi=[1,82],$Vj=[13,40],$Vk=[1,93],$Vl=[1,92],$Vm=[1,94],$Vn=[18,21,40,46];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,9],$V1=[1,8],$V2=[1,13],$V3=[1,12],$V4=[1,18],$V5=[1,17],$V6=[2,13,17],$V7=[1,28],$V8=[1,29],$V9=[2,33],$Va=[2,21],$Vb=[2,24],$Vc=[1,47],$Vd=[1,53],$Ve=[1,50],$Vf=[1,51],$Vg=[1,61],$Vh=[2,21,27],$Vi=[2,30],$Vj=[1,69],$Vk=[1,70],$Vl=[1,71],$Vm=[2,21,26],$Vn=[2,40,42],$Vo=[1,87],$Vp=[2,13],$Vq=[2,10,13],$Vr=[1,94],$Vs=[1,95],$Vt=[1,102],$Vu=[2,13,41,44],$Vv=[1,107],$Vw=[1,106],$Vx=[1,111],$Vy=[1,110],$Vz=[1,112],$VA=[2,18,21,41,47];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"inicio":3,"inicio_wison":4,"EOF":5,"WISON":6,"INTER_A":7,"definicion_lexica":8,"definicion_sintactica":9,"INTER_C":10,"LEX":11,"LLA_A":12,"PUNTOS":13,"cuerpo_definicion_lexica":14,"LLA_C":15,"definicion_terminal":16,"TERMINAL":17,"TERMINAL_SYM":18,"FLECHA_SIMPLE":19,"declaracion_terminal":20,"PUNTO_COMA":21,"PR":22,"estructura_especial":23,"cuerpo_concatenacion":24,"concatenacion":25,"PAR_A":26,"PAR_C":27,"operador":28,"DIGIT":29,"ALL_LETTERS":30,"KLEENE":31,"MAS":32,"SYNTAX":33,"cuerpo_definicion_sintactica":34,"definicion_no_terminales":35,"simbolo_inicial":36,"reglas_de_produccion":37,"no_terminal_definido":38,"NO_TERMINAL":39,"NO_TERMINAL_SYM":40,"INITIAL_SIM":41,"regla_de_produccion_definida":42,"FLECHA_DOBLE":43,"cuerpo_regla_de_produccion":44,"simbolos_regla_de_produccion":45,"OR":46,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",6:"WISON",7:"INTER_A",10:"INTER_C",11:"LEX",12:"LLA_A",13:"PUNTOS",15:"LLA_C",17:"TERMINAL",18:"TERMINAL_SYM",19:"FLECHA_SIMPLE",21:"PUNTO_COMA",22:"PR",26:"PAR_A",27:"PAR_C",29:"DIGIT",30:"ALL_LETTERS",31:"KLEENE",32:"MAS",33:"SYNTAX",39:"NO_TERMINAL",40:"NO_TERMINAL_SYM",41:"INITIAL_SIM",43:"FLECHA_DOBLE",46:"OR"},
-productions_: [0,[3,2],[3,2],[4,6],[4,5],[4,5],[8,6],[8,6],[8,6],[8,6],[8,4],[8,5],[14,2],[14,1],[16,5],[20,1],[20,1],[20,1],[24,2],[24,1],[25,3],[25,4],[23,0],[23,2],[23,2],[28,1],[28,1],[28,1],[28,0],[9,8],[34,3],[35,2],[35,1],[38,3],[36,3],[37,2],[37,1],[42,4],[44,2],[44,1],[45,1],[45,1],[45,1]],
+symbols_: {"error":2,"inicio":3,"inicio_wison":4,"EOF":5,"WISON":6,"INTER_A":7,"definicion_lexica":8,"definicion_sintactica":9,"INTER_C":10,"LEX":11,"LLA_A":12,"PUNTOS":13,"cuerpo_definicion_lexica":14,"LLA_C":15,"definicion_terminal":16,"TERMINAL":17,"TERMINAL_SYM":18,"FLECHA_SIMPLE":19,"declaracion_terminal":20,"PUNTO_COMA":21,"PR":22,"estructura_especial":23,"cuerpo_concatenacion":24,"concatenacion":25,"PAR_A":26,"PAR_C":27,"operador":28,"DIGIT":29,"ALL_LETTERS":30,"KLEENE":31,"MAS":32,"SYNTAX":33,"cuerpo_definicion_sintactica":34,"cuerpo":35,"definicion_no_terminales":36,"simbolo_inicial":37,"reglas_de_produccion":38,"no_terminal_definido":39,"NO_TERMINAL":40,"NO_TERMINAL_SYM":41,"INITIAL_SIM":42,"regla_de_produccion_definida":43,"FLECHA_DOBLE":44,"cuerpo_regla_de_produccion":45,"simbolos_regla_de_produccion":46,"OR":47,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",6:"WISON",7:"INTER_A",10:"INTER_C",11:"LEX",12:"LLA_A",13:"PUNTOS",15:"LLA_C",17:"TERMINAL",18:"TERMINAL_SYM",19:"FLECHA_SIMPLE",21:"PUNTO_COMA",22:"PR",26:"PAR_A",27:"PAR_C",29:"DIGIT",30:"ALL_LETTERS",31:"KLEENE",32:"MAS",33:"SYNTAX",35:"cuerpo",40:"NO_TERMINAL",41:"NO_TERMINAL_SYM",42:"INITIAL_SIM",44:"FLECHA_DOBLE",47:"OR"},
+productions_: [0,[3,2],[3,2],[4,6],[4,5],[4,5],[8,6],[8,4],[8,5],[14,2],[14,1],[16,5],[16,5],[16,5],[16,5],[16,2],[16,5],[20,1],[20,1],[20,1],[24,2],[24,1],[25,3],[25,4],[23,0],[23,2],[23,2],[28,1],[28,1],[28,1],[28,0],[9,8],[9,6],[9,6],[34,3],[34,3],[36,2],[36,1],[39,3],[39,3],[39,2],[39,3],[39,3],[37,3],[38,2],[38,1],[43,4],[43,3],[43,4],[43,4],[45,2],[45,1],[46,1],[46,1],[46,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
 case 2:
- listaErrores.push('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+ insertarError(this._$.first_line, this._$.first_column, 'Error'); 
 break;
 case 4:
- listaErrores.push('Error Sintáctico. Se esperaba exactamente \'WISON ¿\'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la instruccion Wison ¿'); 
 break;
 case 5:
- listaErrores.push('Error Sintáctico. Se esperaba exactamente \'? \'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la instruccion ? Wison'); 
 break;
-case 7: case 9: case 10:
- listaErrores.push(""); 
+case 7:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la expresión Lex {:'); 
 break;
 case 8:
- listaErrores.push("Se esperaba un símbolo '{'"); 
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la expresion :}'); 
 break;
-case 11:
- listaErrores.push("Error de fin de definicion léxica"); 
+case 12:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la palabra Terminal'); 
+break;
+case 13:
+ insertarError(this._$.first_line, this._$.first_column, 'Error en el símbolo terminal declarado'); 
+break;
+case 14:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo ->'); 
+break;
+case 15:
+ insertarError(this._$.first_line, this._$.first_column, 'Error en la definición del terminal'); 
+break;
+case 16:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un ;'); 
+break;
+case 32:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la instrucción Syntax {{:'); 
+break;
+case 33:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba exactamente lo simbolos :}}'); 
+break;
+case 35:
+ insertarError(this._$.first_line, this._$.first_column, 'Error al declarar el simbolo inicial de la gramática'); 
+break;
+case 39:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la palabra No_Terminal'); 
+break;
+case 40:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la expresión No_Terminal \'Simbolo no terminal\''); 
+break;
+case 41:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un nombre válido para el símbolo no terminal'); 
+break;
+case 42:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo ;'); 
+break;
+case 47:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un simbolo no terminal'); 
+break;
+case 48:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo <='); 
+break;
+case 49:
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un simbolo ;'); 
 break;
 }
 },
-table: [{2:[1,3],3:1,4:2,6:[1,4]},{1:[3]},{5:[1,5]},{2:$V0,5:[1,6],8:7,11:$V1},{7:[1,10]},{1:[2,1]},{1:[2,2]},{9:11,33:$V2},{2:[1,14],12:[1,13]},{12:[1,15],14:16,16:17,17:$V3},{2:$V0,8:19,11:$V1},{10:[1,20]},{12:[1,21]},{2:[1,23],13:[1,22]},{13:[1,24]},{13:[1,25]},{13:[1,26],16:27,17:$V3},o($V4,[2,13]),{18:[1,28]},{9:29,33:$V2},{6:[1,30]},{12:[1,31]},{14:32,16:17,17:$V3},{14:33,16:17,17:$V3},{14:34,16:17,17:$V3},{14:35,16:17,17:$V3},{15:[1,36]},o($V4,[2,12]),{19:[1,37]},{2:[1,39],10:[1,38]},{5:[2,4]},{13:[1,40]},{2:[1,42],13:[1,41],16:27,17:$V3},{13:[1,43],16:27,17:$V3},{13:[1,44],16:27,17:$V3},{13:[1,45],16:27,17:$V3},{33:$V5},{20:46,21:$V6,22:[1,47],23:48,24:49,25:52,26:$V7,29:$V8,30:$V9},{6:[1,54]},{5:[2,5]},{34:55,35:56,38:57,39:$Va},{15:[1,59]},{33:[2,11]},{15:[1,60]},{15:[1,61]},{15:[1,62]},{21:[1,63]},{21:[2,15]},{21:[2,16]},{21:[2,17],25:64,26:$V7},o($Vb,$Vc,{28:65,10:$Vd,31:$Ve,32:$Vf}),o($Vb,$Vc,{28:69,10:$Vd,31:$Ve,32:$Vf}),o($Vg,[2,19]),{18:[1,71],23:70,27:$V6,29:$V8,30:$V9},{5:[2,3]},{13:[1,72]},{36:73,38:74,39:$Va,41:[1,75]},o($Vh,[2,32]),{40:[1,76]},{33:[2,6]},{33:[2,9]},{33:[2,8]},{33:[2,7]},o($V4,[2,14]),o($Vg,[2,18]),o($Vb,[2,23]),o($Vb,[2,25]),o($Vb,[2,26]),o($Vb,[2,27]),o($Vb,[2,24]),{27:[1,77]},{10:$Vd,27:$Vc,28:78,31:$Ve,32:$Vf},{15:[1,79]},{37:80,40:$Vi,42:81},o($Vh,[2,31]),{40:[1,83]},{21:[1,84]},o($Vg,[2,20]),{27:[1,85]},{15:[1,86]},{13:[2,30],40:$Vi,42:87},o($Vj,[2,36]),{43:[1,88]},{21:[1,89]},o($Vh,[2,33]),o($Vg,[2,21]),o($V5,[2,29]),o($Vj,[2,35]),{18:$Vk,40:$Vl,44:90,45:91,46:$Vm},{40:[2,34]},{18:$Vk,21:[1,95],40:$Vl,45:96,46:$Vm},o($Vn,[2,39]),o($Vn,[2,40]),o($Vn,[2,41]),o($Vn,[2,42]),o($Vj,[2,37]),o($Vn,[2,38])],
-defaultActions: {5:[2,1],6:[2,2],30:[2,4],36:[2,10],39:[2,5],42:[2,11],47:[2,15],48:[2,16],54:[2,3],59:[2,6],60:[2,9],61:[2,8],62:[2,7],89:[2,34]},
+table: [{2:[1,3],3:1,4:2,6:[1,4]},{1:[3]},{5:[1,5]},{2:$V0,5:[1,6],8:7,11:$V1},{7:[1,10]},{1:[2,1]},{1:[2,2]},{2:$V2,9:11,33:$V3},{12:[1,14]},{2:$V4,14:15,16:16,17:$V5},{2:$V0,8:19,11:$V1},{10:[1,20]},{12:[1,21]},{35:[1,22]},{13:[1,23]},{2:$V4,13:[1,24],16:25,17:$V5},o($V6,[2,10]),{2:[1,27],18:[1,26]},{18:$V7,21:$V8},{2:$V2,9:30,33:$V3},{6:[1,31]},{12:[1,32]},{2:$V2,9:33,33:$V3},{2:$V4,14:34,16:16,17:$V5},{15:[1,35]},o($V6,[2,9]),{2:[1,37],19:[1,36]},{19:[1,38]},{19:[1,39]},o($V6,[2,15]),{2:[1,41],10:[1,40]},{5:[2,4]},{13:[1,42]},{13:[1,43]},{2:[1,45],13:[1,44],16:25,17:$V5},o($V9,[2,7]),o($Va,$Vb,{20:46,23:48,24:49,25:52,22:$Vc,26:$Vd,29:$Ve,30:$Vf}),{20:54,21:$Vb,22:$Vc,23:48,24:49,25:52,26:$Vd,29:$Ve,30:$Vf},{20:55,21:$Vb,22:$Vc,23:48,24:49,25:52,26:$Vd,29:$Ve,30:$Vf},{20:56,21:$Vb,22:$Vc,23:48,24:49,25:52,26:$Vd,29:$Ve,30:$Vf},{6:[1,57]},{5:[2,5]},{2:[1,62],34:58,36:59,39:60,40:$Vg},{15:[1,63]},{15:[1,64]},o($V9,[2,8],{18:$V7,21:$V8}),{2:[1,66],21:[1,65]},o($Va,[2,17]),o($Va,[2,18]),o($Va,[2,19],{25:67,26:$Vd}),o($Vh,$Vi,{28:68,10:$Vj,31:$Vk,32:$Vl}),o($Vh,$Vi,{28:72,10:$Vj,31:$Vk,32:$Vl}),o($Vm,$Va),{18:[1,74],23:73,27:$Vb,29:$Ve,30:$Vf},{21:[1,75]},{21:[1,76]},{21:[1,77]},{5:[2,3]},{2:[1,79],13:[1,78]},{2:[1,81],37:80,39:82,40:$Vg,42:[1,83]},o($Vn,[2,37]),{2:[1,85],41:[1,84]},{21:$Vo,41:[1,86]},{15:[1,88]},o($V9,[2,6]),o($V6,[2,11]),o($V6,[2,16]),o($Vm,[2,20]),o($Vh,[2,25]),o($Vh,[2,27]),o($Vh,[2,28]),o($Vh,[2,29]),o($Vh,[2,26]),{27:[1,89]},{10:$Vj,27:$Vi,28:90,31:$Vk,32:$Vl},o($V6,[2,14]),o($V6,$Vp),o($V6,[2,12]),{15:[1,91]},o($Vq,$V9),{38:92,41:$Vr,43:93,44:$Vs},{21:$Vo,38:96,41:[1,97],43:93,44:$Vs},o($Vn,[2,36]),{41:[1,98]},{2:[1,100],21:[1,99]},{21:[1,101]},{21:$Vt},o($Vn,[2,40]),o($Vq,[2,32]),o($Vm,[2,22]),{27:[1,103]},{15:[1,104]},o($Vp,[2,34],{43:105,41:$Vr,44:$Vs}),o($Vu,[2,45]),{2:$Vv,44:$Vw},{18:$Vx,41:$Vy,45:108,46:109,47:$Vz},o($Vp,[2,35],{43:105,41:$Vr,44:$Vs}),{2:$Vv,21:$Vt,44:$Vw},{21:[1,113]},o($Vn,[2,38]),o($Vn,[2,42]),o($Vn,[2,41]),o($Vn,[2,39]),o($Vm,[2,23]),o($Vq,[2,31]),o($Vu,[2,44]),{18:$Vx,41:$Vy,45:114,46:109,47:$Vz},{18:$Vx,41:$Vy,45:115,46:109,47:$Vz},{18:$Vx,21:[1,116],41:$Vy,46:117,47:$Vz},o($VA,[2,51]),o($VA,[2,52]),o($VA,[2,53]),o($VA,[2,54]),o([41,44],[2,43]),{2:[1,119],18:$Vx,21:[1,118],41:$Vy,46:117,47:$Vz},{18:$Vx,21:[1,120],41:$Vy,46:117,47:$Vz},o($Vu,[2,47]),o($VA,[2,50]),o($Vu,[2,46]),o($Vu,[2,49]),o($Vu,[2,48])],
+defaultActions: {5:[2,1],6:[2,2],31:[2,4],41:[2,5],57:[2,3]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -358,6 +400,10 @@ _handle_error:
     function getListaErrores() {
         alert('Si entra en la funcion');
         return null;
+    }
+
+    function insertarError(linea, columna, descripcion) {
+        listaErrores.push('Error Sintáctico. Linea ' + linea + ". Columna " + columna + ". Descripción: " + descripcion);
     }
 
     exports.listaErrores = listaErrores;
@@ -710,7 +756,7 @@ case 8:return 21
 break;
 case 9:return 19
 break;
-case 10:return 43
+case 10:return 44
 break;
 case 11:return 31
 break;
@@ -720,7 +766,7 @@ case 13:return 26
 break;
 case 14:return 27      
 break;
-case 15:return 46
+case 15:return 47
 break;
 case 16:return 30
 break;
@@ -734,13 +780,13 @@ case 20:return 11
 break;
 case 21:return 33
 break;
-case 22:return 39
+case 22:return 40
 break;
-case 23:return 41
+case 23:return 42
 break;
 case 24:return 18
 break;
-case 25:return 40
+case 25:return 41
 break;
 case 26:return 22
 break;

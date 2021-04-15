@@ -56,8 +56,8 @@
         return null;
     }
 
-    function insertarError(descripcion:string) {
-        listaErrores.push();
+    function insertarError(linea, columna, descripcion) {
+        listaErrores.push('Error Sintáctico. Linea ' + linea + ". Columna " + columna + ". Descripción: " + descripcion);
     }
 
     exports.listaErrores = listaErrores;
@@ -67,21 +67,21 @@
 %%
 
 inicio :    inicio_wison EOF
-            | error EOF { listaErrores.push('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+            | error EOF { insertarError(this._$.first_line, this._$.first_column, 'Error'); }
             ;
 
 inicio_wison :  WISON INTER_A definicion_lexica definicion_sintactica INTER_C WISON
-                | error definicion_lexica definicion_sintactica INTER_C WISON           { listaErrores.push('Error Sintáctico. Se esperaba exactamente \'WISON ¿\'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
-                | WISON INTER_A definicion_lexica definicion_sintactica error           { listaErrores.push('Error Sintáctico. Se esperaba exactamente \'? \'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+                | error definicion_lexica definicion_sintactica INTER_C WISON           { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la instruccion Wison ¿'); }
+                | WISON INTER_A definicion_lexica definicion_sintactica error       { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la instruccion ? Wison'); }
                 ;
 
 //Inicio de la definición léxica
-definicion_lexica : LEX LLA_A PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C
-                    | error LLA_A PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C      { listaErrores.push("Error Sintáctico. Linea " + this._$.first_line + ". Columna: " + this._$.first_column + ); }
-                    | LEX error PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C        { listaErrores.push("Se esperaba un símbolo '{'"); }
-                    | LEX LLA_A error cuerpo_definicion_lexica PUNTOS LLA_C         { listaErrores.push(""); }
-                    | error cuerpo_definicion_lexica PUNTOS LLA_C                   { listaErrores.push(""); }
-                    | LEX LLA_A PUNTOS cuerpo_definicion_lexica error               { listaErrores.push("Error de fin de definicion léxica"); }
+definicion_lexica : LEX LLA_A PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C              
+                    //| error LLA_A PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C      { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la palabra Lex'); }
+                    //| LEX error PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C        { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el símbolo {'); }
+                    //| LEX LLA_A error cuerpo_definicion_lexica PUNTOS LLA_C         { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el símbolo :'); }
+                    | error cuerpo_definicion_lexica PUNTOS LLA_C                   { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la expresión Lex {:'); }
+                    | LEX LLA_A PUNTOS cuerpo_definicion_lexica error               { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la expresion :}'); }
                     ;
 
 cuerpo_definicion_lexica :  cuerpo_definicion_lexica definicion_terminal
@@ -89,6 +89,12 @@ cuerpo_definicion_lexica :  cuerpo_definicion_lexica definicion_terminal
                             ;
 
 definicion_terminal :   TERMINAL TERMINAL_SYM FLECHA_SIMPLE declaracion_terminal PUNTO_COMA
+                        | error TERMINAL_SYM FLECHA_SIMPLE declaracion_terminal PUNTO_COMA                  { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la palabra Terminal'); }
+                        | TERMINAL error FLECHA_SIMPLE declaracion_terminal PUNTO_COMA                      { insertarError(this._$.first_line, this._$.first_column, 'Error en el símbolo terminal declarado'); }
+                        | TERMINAL TERMINAL_SYM error declaracion_terminal PUNTO_COMA                       { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo ->'); }
+                        //| TERMINAL TERMINAL_SYM FLECHA_SIMPLE error PUNTO_COMA                              { insertarError(this._$.first_line, this._$.first_column, 'Error en la asignación de valor al terminal'); }
+                        | error PUNTO_COMA                                                                  { insertarError(this._$.first_line, this._$.first_column, 'Error en la definición del terminal'); }
+                        | TERMINAL TERMINAL_SYM FLECHA_SIMPLE declaracion_terminal error                    { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un ;'); }
                         ;
 
 declaracion_terminal :  PR
@@ -118,9 +124,12 @@ operador :  INTER_C
 
 
 definicion_sintactica : SYNTAX LLA_A LLA_A PUNTOS cuerpo_definicion_sintactica PUNTOS LLA_C LLA_C   
+                        | error cuerpo definicion_sintactica PUNTOS LLA_C LLA_C                     { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la instrucción Syntax {{:'); }
+                        | SYNTAX LLA_A LLA_A PUNTOS cuerpo_definicion_sintactica error              { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba exactamente lo simbolos :}}'); }
                         ;
 
 cuerpo_definicion_sintactica :  definicion_no_terminales simbolo_inicial reglas_de_produccion
+                                | definicion_no_terminales error reglas_de_produccion       { insertarError(this._$.first_line, this._$.first_column, 'Error al declarar el simbolo inicial de la gramática'); }
                                 ;
 
 //Definimos los no terminales de wison
@@ -129,6 +138,10 @@ definicion_no_terminales :  definicion_no_terminales no_terminal_definido
                             ;
 
 no_terminal_definido :  NO_TERMINAL NO_TERMINAL_SYM PUNTO_COMA
+                        | error NO_TERMINAL_SYM PUNTO_COMA              { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la palabra No_Terminal'); }
+                        | error PUNTO_COMA                              { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la expresión No_Terminal \'Simbolo no terminal\''); }
+                        | NO_TERMINAL error PUNTO_COMA                  { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un nombre válido para el símbolo no terminal'); }
+                        | NO_TERMINAL NO_TERMINAL_SYM error             { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo ;'); }
                         ;
 
 
@@ -142,6 +155,9 @@ reglas_de_produccion :  reglas_de_produccion regla_de_produccion_definida
                         ;
 
 regla_de_produccion_definida :  NO_TERMINAL_SYM FLECHA_DOBLE cuerpo_regla_de_produccion PUNTO_COMA
+                                | FLECHA_DOBLE cuerpo_regla_de_produccion PUNTO_COMA                    { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un simbolo no terminal'); }
+                                | NO_TERMINAL_SYM error cuerpo_regla_de_produccion PUNTO_COMA           { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo <='); }
+                                | NO_TERMINAL_SYM FLECHA_DOBLE cuerpo_regla_de_produccion error         { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un simbolo ;'); }
                                 ;
 
 cuerpo_regla_de_produccion :    cuerpo_regla_de_produccion simbolos_regla_de_produccion
