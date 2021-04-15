@@ -3,7 +3,7 @@
 
 #Estructura Wison
 
-Wison 
+Wison ¿
 Lex {:
      /**
       Esto es un
@@ -25,8 +25,7 @@ Lex {:
     Terminal $_NUMEROS_2 <- [0-9]+ ; # Cerradura positiva para hacer 1 on veces
     Terminal $_NUMEROS_3 <- [0-9]? ; # reconoce la cláusula ? para hacer 0 o 1 vez 
     Terminal $_Decimal   <- ([0-9]*)($_Punto)($_NUMEROS_2); # terminal combinado
-
-:} 
+} 
 
 
 Syntax {{:
@@ -54,7 +53,7 @@ Syntax {{:
    %_Prod_C <= $_Una_A $_Mas $_Una_A ;
 :}}
 
-? WISON
+? Wison
 # Fin de estructura Wison
 
 

@@ -1,2 +1,7 @@
-<textarea class="areaTexto" #entrada></textarea>
-<button (click)="parseWison(entrada.value)">Analizar</button>
+<div class="container-fluid">
+    <label>Editor de Texto</label><br>
+    <label>Linea: {{linea}} - Columa: {{columna}}</label><br>
+    <textarea (keydown)="actualizarPosicion(this.entrada)" (keyup)="actualizarPosicion(this.entrada)" id="areaTexto" class="areaTexto" #entrada></textarea>
+    <br><br>
+    <button class="btn btn-danger" (click)="parseWison(entrada.value)">Analizar</button>
+</div>

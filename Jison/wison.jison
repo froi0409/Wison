@@ -65,6 +65,11 @@ inicio_wison :  WISON INTER_A definicion_lexica definicion_sintactica INTER_C WI
 
 //Inicio de la definición léxica
 definicion_lexica : LEX LLA_A PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C
+                    | error LLA_A PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C
+                    | LEX error PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C        { console.error("Se esperaba un símbolo '{'"); }
+                    | LEX LLA_A error cuerpo_definicion_lexica PUNTOS LLA_C
+                    | error cuerpo_definicion_lexica PUNTOS LLA_C
+                    | LEX LLA_A PUNTOS cuerpo_definicion_lexica error               { console.error("Error de fin de definicion léxica"); }
                     ;
 
 cuerpo_definicion_lexica :  cuerpo_definicion_lexica definicion_terminal
@@ -100,7 +105,7 @@ operador :  INTER_C
 
 
 
-definicion_sintactica : SYNTAX LLA_A LLA_A PUNTOS cuerpo_definicion_sintactica PUNTOS LLA_C LLA_C
+definicion_sintactica : SYNTAX LLA_A LLA_A PUNTOS cuerpo_definicion_sintactica PUNTOS LLA_C LLA_C   { console.log("se recupera"); }
                         ;
 
 cuerpo_definicion_sintactica :  definicion_no_terminales simbolo_inicial reglas_de_produccion
