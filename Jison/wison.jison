@@ -49,27 +49,39 @@
 %start inicio
 
 %{
-    
+    var listaErrores = [];
+
+    function getListaErrores() {
+        alert('Si entra en la funcion');
+        return null;
+    }
+
+    function insertarError(descripcion:string) {
+        listaErrores.push();
+    }
+
+    exports.listaErrores = listaErrores;
+
 %}
 
 %%
 
 inicio :    inicio_wison EOF
-            | error EOF { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+            | error EOF { listaErrores.push('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
             ;
 
 inicio_wison :  WISON INTER_A definicion_lexica definicion_sintactica INTER_C WISON
-                | error definicion_lexica definicion_sintactica INTER_C WISON           { console.error('Error Sintáctico. Se esperaba exactamente \'WISON ¿\'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
-                | WISON INTER_A definicion_lexica definicion_sintactica error           { console.error('Error Sintáctico. Se esperaba exactamente \'? \'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+                | error definicion_lexica definicion_sintactica INTER_C WISON           { listaErrores.push('Error Sintáctico. Se esperaba exactamente \'WISON ¿\'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+                | WISON INTER_A definicion_lexica definicion_sintactica error           { listaErrores.push('Error Sintáctico. Se esperaba exactamente \'? \'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
                 ;
 
 //Inicio de la definición léxica
 definicion_lexica : LEX LLA_A PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C
-                    | error LLA_A PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C
-                    | LEX error PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C        { console.error("Se esperaba un símbolo '{'"); }
-                    | LEX LLA_A error cuerpo_definicion_lexica PUNTOS LLA_C
-                    | error cuerpo_definicion_lexica PUNTOS LLA_C
-                    | LEX LLA_A PUNTOS cuerpo_definicion_lexica error               { console.error("Error de fin de definicion léxica"); }
+                    | error LLA_A PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C      { listaErrores.push("Error Sintáctico. Linea " + this._$.first_line + ". Columna: " + this._$.first_column + ); }
+                    | LEX error PUNTOS cuerpo_definicion_lexica PUNTOS LLA_C        { listaErrores.push("Se esperaba un símbolo '{'"); }
+                    | LEX LLA_A error cuerpo_definicion_lexica PUNTOS LLA_C         { listaErrores.push(""); }
+                    | error cuerpo_definicion_lexica PUNTOS LLA_C                   { listaErrores.push(""); }
+                    | LEX LLA_A PUNTOS cuerpo_definicion_lexica error               { listaErrores.push("Error de fin de definicion léxica"); }
                     ;
 
 cuerpo_definicion_lexica :  cuerpo_definicion_lexica definicion_terminal
@@ -105,7 +117,7 @@ operador :  INTER_C
 
 
 
-definicion_sintactica : SYNTAX LLA_A LLA_A PUNTOS cuerpo_definicion_sintactica PUNTOS LLA_C LLA_C   { console.log("se recupera"); }
+definicion_sintactica : SYNTAX LLA_A LLA_A PUNTOS cuerpo_definicion_sintactica PUNTOS LLA_C LLA_C   
                         ;
 
 cuerpo_definicion_sintactica :  definicion_no_terminales simbolo_inicial reglas_de_produccion

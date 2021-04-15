@@ -72,30 +72,39 @@
   }
 */
 var wison = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,8],$V1=[1,11],$V2=[1,22],$V3=[13,17],$V4=[1,33],$V5=[39,41],$V6=[2,17],$V7=[1,48],$V8=[1,45],$V9=[1,46],$Va=[1,52],$Vb=[2,10],$Vc=[21,27],$Vd=[2,23],$Ve=[1,58],$Vf=[1,59],$Vg=[1,60],$Vh=[21,26],$Vi=[13,40],$Vj=[1,73],$Vk=[1,72],$Vl=[1,74],$Vm=[18,21,40,46];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,9],$V1=[1,8],$V2=[1,12],$V3=[1,18],$V4=[2,13,17],$V5=[2,10],$V6=[2,22],$V7=[1,53],$V8=[1,50],$V9=[1,51],$Va=[1,58],$Vb=[21,27],$Vc=[2,28],$Vd=[1,66],$Ve=[1,67],$Vf=[1,68],$Vg=[21,26],$Vh=[39,41],$Vi=[1,82],$Vj=[13,40],$Vk=[1,93],$Vl=[1,92],$Vm=[1,94],$Vn=[18,21,40,46];
 var parser = {trace: function trace () { },
 yy: {},
 symbols_: {"error":2,"inicio":3,"inicio_wison":4,"EOF":5,"WISON":6,"INTER_A":7,"definicion_lexica":8,"definicion_sintactica":9,"INTER_C":10,"LEX":11,"LLA_A":12,"PUNTOS":13,"cuerpo_definicion_lexica":14,"LLA_C":15,"definicion_terminal":16,"TERMINAL":17,"TERMINAL_SYM":18,"FLECHA_SIMPLE":19,"declaracion_terminal":20,"PUNTO_COMA":21,"PR":22,"estructura_especial":23,"cuerpo_concatenacion":24,"concatenacion":25,"PAR_A":26,"PAR_C":27,"operador":28,"DIGIT":29,"ALL_LETTERS":30,"KLEENE":31,"MAS":32,"SYNTAX":33,"cuerpo_definicion_sintactica":34,"definicion_no_terminales":35,"simbolo_inicial":36,"reglas_de_produccion":37,"no_terminal_definido":38,"NO_TERMINAL":39,"NO_TERMINAL_SYM":40,"INITIAL_SIM":41,"regla_de_produccion_definida":42,"FLECHA_DOBLE":43,"cuerpo_regla_de_produccion":44,"simbolos_regla_de_produccion":45,"OR":46,"$accept":0,"$end":1},
 terminals_: {2:"error",5:"EOF",6:"WISON",7:"INTER_A",10:"INTER_C",11:"LEX",12:"LLA_A",13:"PUNTOS",15:"LLA_C",17:"TERMINAL",18:"TERMINAL_SYM",19:"FLECHA_SIMPLE",21:"PUNTO_COMA",22:"PR",26:"PAR_A",27:"PAR_C",29:"DIGIT",30:"ALL_LETTERS",31:"KLEENE",32:"MAS",33:"SYNTAX",39:"NO_TERMINAL",40:"NO_TERMINAL_SYM",41:"INITIAL_SIM",43:"FLECHA_DOBLE",46:"OR"},
-productions_: [0,[3,2],[3,2],[4,6],[4,5],[4,5],[8,6],[14,2],[14,1],[16,5],[20,1],[20,1],[20,1],[24,2],[24,1],[25,3],[25,4],[23,0],[23,2],[23,2],[28,1],[28,1],[28,1],[28,0],[9,8],[34,3],[35,2],[35,1],[38,3],[36,3],[37,2],[37,1],[42,4],[44,2],[44,1],[45,1],[45,1],[45,1]],
+productions_: [0,[3,2],[3,2],[4,6],[4,5],[4,5],[8,6],[8,6],[8,6],[8,6],[8,4],[8,5],[14,2],[14,1],[16,5],[20,1],[20,1],[20,1],[24,2],[24,1],[25,3],[25,4],[23,0],[23,2],[23,2],[28,1],[28,1],[28,1],[28,0],[9,8],[34,3],[35,2],[35,1],[38,3],[36,3],[37,2],[37,1],[42,4],[44,2],[44,1],[45,1],[45,1],[45,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
 case 2:
- console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+ listaErrores.push('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
 break;
 case 4:
- console.error('Error Sintáctico. Se esperaba exactamente \'WISON ¿\'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+ listaErrores.push('Error Sintáctico. Se esperaba exactamente \'WISON ¿\'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
 break;
 case 5:
- console.error('Error Sintáctico. Se esperaba exactamente \'? \'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+ listaErrores.push('Error Sintáctico. Se esperaba exactamente \'? \'. Conflicto cerca de: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+break;
+case 7: case 9: case 10:
+ listaErrores.push(""); 
+break;
+case 8:
+ listaErrores.push("Se esperaba un símbolo '{'"); 
+break;
+case 11:
+ listaErrores.push("Error de fin de definicion léxica"); 
 break;
 }
 },
-table: [{2:[1,3],3:1,4:2,6:[1,4]},{1:[3]},{5:[1,5]},{5:[1,6],8:7,11:$V0},{7:[1,9]},{1:[2,1]},{1:[2,2]},{9:10,33:$V1},{12:[1,12]},{8:13,11:$V0},{10:[1,14]},{12:[1,15]},{13:[1,16]},{9:17,33:$V1},{6:[1,18]},{12:[1,19]},{14:20,16:21,17:$V2},{2:[1,24],10:[1,23]},{5:[2,4]},{13:[1,25]},{13:[1,26],16:27,17:$V2},o($V3,[2,8]),{18:[1,28]},{6:[1,29]},{5:[2,5]},{34:30,35:31,38:32,39:$V4},{15:[1,34]},o($V3,[2,7]),{19:[1,35]},{5:[2,3]},{13:[1,36]},{36:37,38:38,39:$V4,41:[1,39]},o($V5,[2,27]),{40:[1,40]},{33:[2,6]},{20:41,21:$V6,22:[1,42],23:43,24:44,25:47,26:$V7,29:$V8,30:$V9},{15:[1,49]},{37:50,40:$Va,42:51},o($V5,[2,26]),{40:[1,53]},{21:[1,54]},{21:[1,55]},{21:$Vb},{21:[2,11]},{21:[2,12],25:56,26:$V7},o($Vc,$Vd,{28:57,10:$Ve,31:$Vf,32:$Vg}),o($Vc,$Vd,{28:61,10:$Ve,31:$Vf,32:$Vg}),o($Vh,[2,14]),{18:[1,63],23:62,27:$V6,29:$V8,30:$V9},{15:[1,64]},{13:[2,25],40:$Va,42:65},o($Vi,[2,31]),{43:[1,66]},{21:[1,67]},o($V5,[2,28]),o($V3,[2,9]),o($Vh,[2,13]),o($Vc,[2,18]),o($Vc,[2,20]),o($Vc,[2,21]),o($Vc,[2,22]),o($Vc,[2,19]),{27:[1,68]},{10:$Ve,27:$Vd,28:69,31:$Vf,32:$Vg},o($Vb,[2,24]),o($Vi,[2,30]),{18:$Vj,40:$Vk,44:70,45:71,46:$Vl},{40:[2,29]},o($Vh,[2,15]),{27:[1,75]},{18:$Vj,21:[1,76],40:$Vk,45:77,46:$Vl},o($Vm,[2,34]),o($Vm,[2,35]),o($Vm,[2,36]),o($Vm,[2,37]),o($Vh,[2,16]),o($Vi,[2,32]),o($Vm,[2,33])],
-defaultActions: {5:[2,1],6:[2,2],18:[2,4],24:[2,5],29:[2,3],34:[2,6],42:[2,10],43:[2,11],67:[2,29]},
+table: [{2:[1,3],3:1,4:2,6:[1,4]},{1:[3]},{5:[1,5]},{2:$V0,5:[1,6],8:7,11:$V1},{7:[1,10]},{1:[2,1]},{1:[2,2]},{9:11,33:$V2},{2:[1,14],12:[1,13]},{12:[1,15],14:16,16:17,17:$V3},{2:$V0,8:19,11:$V1},{10:[1,20]},{12:[1,21]},{2:[1,23],13:[1,22]},{13:[1,24]},{13:[1,25]},{13:[1,26],16:27,17:$V3},o($V4,[2,13]),{18:[1,28]},{9:29,33:$V2},{6:[1,30]},{12:[1,31]},{14:32,16:17,17:$V3},{14:33,16:17,17:$V3},{14:34,16:17,17:$V3},{14:35,16:17,17:$V3},{15:[1,36]},o($V4,[2,12]),{19:[1,37]},{2:[1,39],10:[1,38]},{5:[2,4]},{13:[1,40]},{2:[1,42],13:[1,41],16:27,17:$V3},{13:[1,43],16:27,17:$V3},{13:[1,44],16:27,17:$V3},{13:[1,45],16:27,17:$V3},{33:$V5},{20:46,21:$V6,22:[1,47],23:48,24:49,25:52,26:$V7,29:$V8,30:$V9},{6:[1,54]},{5:[2,5]},{34:55,35:56,38:57,39:$Va},{15:[1,59]},{33:[2,11]},{15:[1,60]},{15:[1,61]},{15:[1,62]},{21:[1,63]},{21:[2,15]},{21:[2,16]},{21:[2,17],25:64,26:$V7},o($Vb,$Vc,{28:65,10:$Vd,31:$Ve,32:$Vf}),o($Vb,$Vc,{28:69,10:$Vd,31:$Ve,32:$Vf}),o($Vg,[2,19]),{18:[1,71],23:70,27:$V6,29:$V8,30:$V9},{5:[2,3]},{13:[1,72]},{36:73,38:74,39:$Va,41:[1,75]},o($Vh,[2,32]),{40:[1,76]},{33:[2,6]},{33:[2,9]},{33:[2,8]},{33:[2,7]},o($V4,[2,14]),o($Vg,[2,18]),o($Vb,[2,23]),o($Vb,[2,25]),o($Vb,[2,26]),o($Vb,[2,27]),o($Vb,[2,24]),{27:[1,77]},{10:$Vd,27:$Vc,28:78,31:$Ve,32:$Vf},{15:[1,79]},{37:80,40:$Vi,42:81},o($Vh,[2,31]),{40:[1,83]},{21:[1,84]},o($Vg,[2,20]),{27:[1,85]},{15:[1,86]},{13:[2,30],40:$Vi,42:87},o($Vj,[2,36]),{43:[1,88]},{21:[1,89]},o($Vh,[2,33]),o($Vg,[2,21]),o($V5,[2,29]),o($Vj,[2,35]),{18:$Vk,40:$Vl,44:90,45:91,46:$Vm},{40:[2,34]},{18:$Vk,21:[1,95],40:$Vl,45:96,46:$Vm},o($Vn,[2,39]),o($Vn,[2,40]),o($Vn,[2,41]),o($Vn,[2,42]),o($Vj,[2,37]),o($Vn,[2,38])],
+defaultActions: {5:[2,1],6:[2,2],30:[2,4],36:[2,10],39:[2,5],42:[2,11],47:[2,15],48:[2,16],54:[2,3],59:[2,6],60:[2,9],61:[2,8],62:[2,7],89:[2,34]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -344,7 +353,15 @@ _handle_error:
     return true;
 }};
 
-    
+    var listaErrores = [];
+
+    function getListaErrores() {
+        alert('Si entra en la funcion');
+        return null;
+    }
+
+    exports.listaErrores = listaErrores;
+
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
 var lexer = ({

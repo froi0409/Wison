@@ -11,25 +11,31 @@ export class AreaTextoComponent implements OnInit {
 
   linea = "1";
   columna = '1';
-
+  salida = 'No hay datos de salida';
   constructor() { }
 
   ngOnInit(): void {
   }
-
-  parseWison(entrada:string) {
-    alert(entrada);
-    //var parserWison = wisonParser;
-    wisonParser.parse(entrada);
-  }
-
-  //Método que nos sirve para hallar la posición del cursor en el area de texto
+//Método que nos sirve para hallar la posición del cursor en el area de texto
   actualizarPosicion(textarea) {
     var textLines = textarea.value.substr(0, textarea.selectionStart).split("\n");
     var currentLine = textLines.length;
     var currentColumn = textLines[textLines.length-1].length + 1;
     this.linea = currentLine;
     this.columna = currentColumn;
+  }
+
+  parseWison(entrada:string) {
+    wisonParser.listaErrores.splice(0, wisonParser.listaErrores.length);
+    wisonParser.parse(entrada);
+    //Se tienen problemas para ejecutar la función que detecta los errores
+    //wisonParser.getListaErrores(this.salida);
+    if(wisonParser.listaErrores.length == 0) {
+      this.salida = 'La entrada ha sido analizada con éxito';
+    } else {
+      var variable = wisonParser.listaErrores;
+      this.salida = variable; 
+    }
   }
 
 }
