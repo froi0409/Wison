@@ -118,7 +118,11 @@ case 14:
 break;
 case 17:
 
-                            listaTerminales.push($$[$0-3]); //Declaración de los no terminales, se puede modificar
+                            if(listaTerminales.includes($$[$0-3])) {
+                                insertarErrorSemántico(this._$.first_line, this._$.first_column, 'El simbolo terminal ' + $$[$0-3] + ' ya se encuentra definido');
+                            } else {
+                                listaTerminales.push($$[$0-3]); //Declaración de los no terminales, se puede modificar
+                            }
                         
 break;
 case 18:
@@ -128,13 +132,16 @@ case 19:
  insertarError(this._$.first_line, this._$.first_column, 'Error en el símbolo terminal declarado'); 
 break;
 case 20:
- insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo ->'); 
+ insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo <-'); 
 break;
 case 21:
  insertarError(this._$.first_line, this._$.first_column, 'Error en la definición del terminal'); 
 break;
 case 22:
  insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un ;'); 
+break;
+case 37:
+ verificarReglaDeProduccion(); 
 break;
 case 38:
  insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la palabra Syntax'); 
@@ -154,6 +161,15 @@ break;
 case 46:
  insertarError(this._$.first_line, this._$.first_column, 'Error al declarar el simbolo inicial de la gramática. La estructura debe ser: Initial_Sim \'Simbolo no terminal\' ;'); 
 break;
+case 49:
+
+                            if(listaNoTerminales.includes($$[$0-1])) {
+                                insertarErrorSemántico(this._$.first_line, this._$.first_column, 'El simbolo no terminal ' + $$[$0-1] + ' ya se encuentra definido');
+                            } else {
+                                listaNoTerminales.push($$[$0-1]);
+                            }
+                        
+break;
 case 50:
  insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la palabra No_Terminal'); 
 break;
@@ -172,6 +188,18 @@ break;
 case 56:
  insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el símbolo ;'); 
 break;
+case 59:
+
+                                    if(listaNoTerminales.includes($$[$0-3])) {
+                                        var reglaProduccion = new Object();
+                                        reglaProduccion.simboloNoTerminal = $$[$0-3];
+                                        reglaProduccion.condiciones = $$[$0-1];
+                                        reglasDeProduccion.push(reglaProduccion);
+                                    } else {
+                                        insertarErrorSemántico(this._$.first_line, this._$.first_column, 'El simbolo no terminal ' + $$[$0-3] + ' no se encuentra definido');
+                                    }
+                                
+break;
 case 60:
  insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un simbolo no terminal'); 
 break;
@@ -180,6 +208,43 @@ case 61:
 break;
 case 62:
  insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un simbolo ;'); 
+break;
+case 63:
+
+                                    if($$[$0] !== null) {
+                                        if($$[$0] === '|') {
+                                            var nuevoArray = [];
+                                            $$[$0-1].push(nuevoArray);
+                                        } else if($$[$0-1] !== null) {
+                                            //Insertamos el simbolo a la regla de producción
+                                            $$[$0-1][$$[$0-1].length - 1].push($$[$0]);
+                                        }
+                                    }
+                                    this.$ = $$[$0-1];
+                                
+break;
+case 64:
+
+                                    var array = [];
+                                    if($$[$0] !== null) {
+                                        var arrayProvisional = [];
+                                        arrayProvisional.push($$[$0]);
+                                        array.push(arrayProvisional);
+                                    }
+                                    this.$ = array;
+                                
+break;
+case 65: case 66:
+
+                                    if(listaTerminales.includes($$[$0]) || listaNoTerminales.includes($$[$0])) {
+                                        this.$ = $$[$0]
+                                    } else {
+                                        insertarErrorSemántico(this._$.first_line, this._$.first_column, 'El simbolo ' + $$[$0] + ' no está definido dentro de los simbolos no terminales ni en los simbolos terminales');
+                                    }
+                                
+break;
+case 67:
+this.$ = $$[$0]
 break;
 }
 },
@@ -448,7 +513,58 @@ _handle_error:
         listaErrores.push('Error Sintáctico. Linea ' + linea + ". Columna " + columnaSumada + ". Descripción: " + descripcion);
     }
 
+    function insertarErrorSemántico(linea, columna, descripcion) {
+        var columnaSumada = columna + 1;
+        listaErrores.push('Error Semántico. Linea ' + linea + ". Columna " + columnaSumada + ". Descripción: " + descripcion);
+    }
+    
+    function verificarReglaDeProduccion() {
+        for(let i = 0; i < reglasDeProduccion.length; i++) {
+            var produccion = reglasDeProduccion[i];
+            verificarRecursividadIzquierda(produccion);
+            verificarFactorizacion(produccion);
+        }
+    }
+
+    function verificarRecursividadIzquierda(produccion) {
+        for(let i  = 0; i < produccion.condiciones.length; i++) {
+            for(let j = 0; j < produccion.condiciones[i].length-1; j++) {
+                if(produccion.condiciones[i][j] === produccion.simboloNoTerminal) {
+                    var cadena = '';
+                    for(let k = 0; k < produccion.condiciones[i].length; k++) {
+                        cadena += produccion.condiciones[i][k] + ' ';
+                    }
+                    listaErrores.push("Advertencia: La regla de producción del símbolo no terminal " + produccion.simboloNoTerminal + " tiene recursividad por la izquierda en su regla " + cadena + ", reescriba la regla de producción");
+                }
+            }
+        }
+    }
+
+    function verificarFactorizacion(produccion) {
+        var listaAux = [];
+        for(let i  = 0; i < produccion.condiciones.length; i++) {
+        
+            var simbolo;
+            if(produccion.condiciones[i].length === 0) {
+                simbolo = 'cadenaVacia';
+            } else {
+                simbolo = produccion.condiciones[i][0];
+            }
+
+            if(listaAux.includes(simbolo)) {
+                listaErrores.push("Advertencia: La regla de producción del simbolo no terminal " + produccion.simboloNoTerminal + " debe ser factorizada en las producciones que inician con el simbolo " + simbolo);
+            } else {
+                listaAux.push(simbolo);
+            }
+            console.log("Se encontró el simbolo: " + simbolo);
+        
+        }
+    }
+
     exports.listaErrores = listaErrores;
+    exports.listaTerminales = listaTerminales;
+    exports.listaNoTerminales = listaNoTerminales;  
+    exports.reglasDeProduccion = reglasDeProduccion;
 
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
@@ -834,11 +950,11 @@ case 26:return 22
 break;
 case 27:return 5
 break;
-case 28:return 'INVALID'
+case 28: listaErrores.push('Error Sintáctico. Linea ' + yy_.yylloc.first_line + ". Columna " + (yy_.yylloc.first_column + 1) + ". Descripción:" + yy_.yytext + " es un simbolo no reconocido por la gramática"); 
 break;
 }
 },
-rules: [/^(?:[ \r\t\n])/,/^(?:#.*)/,/^(?:[/][*][*][^*]*[*]+([^/*][^*]*[*]+)*[/])/,/^(?:¿)/,/^(?:[?])/,/^(?:\{)/,/^(?:\})/,/^(?::)/,/^(?:;)/,/^(?:<-)/,/^(?:<=)/,/^(?:[*])/,/^(?:[+])/,/^(?:[(])/,/^(?:[)])/,/^(?:[|])/,/^(?:((\[)(aA-zZ)(\])))/,/^(?:((\[)(0-9)(\])))/,/^(?:(Wison))/,/^(?:(Terminal))/,/^(?:[L][e][x])/,/^(?:(Syntax))/,/^(?:(No_Terminal))/,/^(?:(Initial_Sim))/,/^(?:[$][_]([a-zA-Z]|[0-9]|[_])+)/,/^(?:[%][_]([a-zA-Z]|[0-9]|[_])+)/,/^(?:([\']|[\‘]|[\’])([^\' \‘ \’ \n ' ']+)([\']|[\‘]|[\’]))/,/^(?:$)/,/^(?:.)/],
+rules: [/^(?:[ \r\t\n])/,/^(?:#.*)/,/^(?:[/][*][*][^*]*[*]+([^/*][^*]*[*]+)*[/])/,/^(?:¿)/,/^(?:[?])/,/^(?:\{)/,/^(?:\})/,/^(?::)/,/^(?:;)/,/^(?:<-)/,/^(?:<=)/,/^(?:[*])/,/^(?:[+])/,/^(?:[(])/,/^(?:[)])/,/^(?:[|])/,/^(?:((\[)(aA-zZ)(\])))/,/^(?:((\[)(0-9)(\])))/,/^(?:(Wison))/,/^(?:(Terminal))/,/^(?:[L][e][x])/,/^(?:(Syntax))/,/^(?:(No_Terminal))/,/^(?:(Initial_Sim))/,/^(?:[$][_]([a-zA-Z]|[0-9]|[_])+)/,/^(?:[%][_]([a-zA-Z]|[0-9]|[_])+)/,/^(?:([\']|[\‘]|[\’])([^\' \‘ \’ \n ' ']+)([\']|[\‘]|[\’]))/,/^(?:$)/,/^(?:(.*))/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28],"inclusive":true}}
 });
 return lexer;

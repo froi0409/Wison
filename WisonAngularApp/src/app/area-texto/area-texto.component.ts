@@ -26,10 +26,9 @@ export class AreaTextoComponent implements OnInit {
   }
 
   parseWison(entrada:string) {
-    //Limpiamos la lista de errores
-    wisonParser.listaErrores.splice(0, wisonParser.listaErrores.length);
-    wisonParser.listaErrores.length = 0;
-    
+    //Limpiamos los listados
+    this.limpiarArreglos();
+
     try {
       wisonParser.parse(entrada);
       //Se tienen problemas para ejecutar la función que detecta los errores
@@ -46,7 +45,19 @@ export class AreaTextoComponent implements OnInit {
       }
     } catch(error) {
       this.salida='Error Irrecuperable';
+      console.error(error);
     }
+  }
+
+  limpiarArreglos() {
+    wisonParser.listaErrores.splice(0, wisonParser.listaErrores.length);
+    wisonParser.listaErrores.length = 0;
+    wisonParser.listaTerminales.splice(0, wisonParser.listaTerminales.length);
+    wisonParser.listaTerminales.length = 0;
+    wisonParser.listaNoTerminales.splice(0, wisonParser.listaNoTerminales.length);
+    wisonParser.listaNoTerminales.length = 0;
+    wisonParser.reglasDeProduccion.splice(0, wisonParser.reglasDeProduccion.length);
+    wisonParser.reglasDeProduccion.length = 0;
   }
 
 }
