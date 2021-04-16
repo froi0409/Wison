@@ -73,7 +73,7 @@
         for(let i = 0; i < reglasDeProduccion.length; i++) {
             var produccion = reglasDeProduccion[i];
             verificarRecursividadIzquierda(produccion);
-            //verificarFactorizacion(produccion);
+            verificarFactorizacion(produccion);
         }
     }
 
@@ -92,22 +92,23 @@
     }
 
     function verificarFactorizacion(produccion) {
+        var listaAux = [];
         for(let i  = 0; i < produccion.condiciones.length; i++) {
-            var listaAux = [];
-            for(let j = 0; j < produccion.condiciones[i].length-1; j++) {
-                var simbolo;
-                if(produccion.condiciones[i].length === 0) {
-                    simbolo = 'cadenaVacia';
-                } else {
-                    simbolo = condiciones[i][0];
-                }
-
-                if(listaAux.includes(simbolo)) {
-
-                } else {
-                    listaAux.push(simbolo);
-                }
+        
+            var simbolo;
+            if(produccion.condiciones[i].length === 0) {
+                simbolo = 'cadenaVacia';
+            } else {
+                simbolo = produccion.condiciones[i][0];
             }
+
+            if(listaAux.includes(simbolo)) {
+                listaErrores.push("Advertencia: La regla de producción del simbolo no terminal " + produccion.simboloNoTerminal + " debe ser factorizada en las producciones que inician con el simbolo " + simbolo);
+            } else {
+                listaAux.push(simbolo);
+            }
+            console.log("Se encontró el simbolo: " + simbolo);
+        
         }
     }
 
