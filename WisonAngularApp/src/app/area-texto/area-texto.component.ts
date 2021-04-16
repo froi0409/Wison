@@ -29,18 +29,23 @@ export class AreaTextoComponent implements OnInit {
     //Limpiamos la lista de errores
     wisonParser.listaErrores.splice(0, wisonParser.listaErrores.length);
     wisonParser.listaErrores.length = 0;
-    wisonParser.parse(entrada);
-    //Se tienen problemas para ejecutar la función que detecta los errores
-    //wisonParser.getListaErrores(this.salida);
-    if(wisonParser.listaErrores.length == 0) {
-      this.salida = 'La entrada ha sido analizada con éxito';
-    } else {
-      //Agregamos los errores en la salirda
-      var variable = wisonParser.listaErrores;
-      this.salida = 'Advertencias:\n';
-      for(let i = 0; i < variable.length; i++) {
-        this.salida += variable[i] + '\n';
+    
+    try {
+      wisonParser.parse(entrada);
+      //Se tienen problemas para ejecutar la función que detecta los errores
+      //wisonParser.getListaErrores(this.salida);
+      if(wisonParser.listaErrores.length == 0) {
+        this.salida = 'La entrada ha sido analizada con éxito';
+      } else {
+        //Agregamos los errores en la salirda
+        var variable = wisonParser.listaErrores;
+        this.salida = 'Advertencias:\n';
+        for(let i = 0; i < variable.length; i++) {
+          this.salida += variable[i] + '\n';
+        }
       }
+    } catch(error) {
+      this.salida='Error Irrecuperable';
     }
   }
 
