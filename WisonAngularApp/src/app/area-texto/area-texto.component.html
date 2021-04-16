@@ -1,0 +1,14 @@
+<div class="row container-fluid">
+    <label><h3>Editor de Texto</h3></label><br>
+    <label>Linea: {{linea}} - Columa: {{columna}}</label><br>
+    <textarea (click)="actualizarPosicion(this.entrada)" (keydown)="actualizarPosicion(this.entrada)" (keyup)="actualizarPosicion(this.entrada)" id="areaTexto" class="areaTexto" #entrada></textarea>
+</div>
+<br>
+<div class="row container-fluid">
+    <button class="btn btn-danger" (click)="parseWison(entrada.value)">Analizar</button>
+</div>
+<br><br>
+
+<div class="row container-fluid">
+    <textarea rows="5" style="background-color: antiquewhite;">{{salida}}</textarea>
+</div>
