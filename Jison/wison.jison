@@ -157,7 +157,7 @@ definicion_terminal :   TERMINAL TERMINAL_SYM FLECHA_SIMPLE declaracion_terminal
                         
                         | error TERMINAL_SYM FLECHA_SIMPLE declaracion_terminal PUNTO_COMA                  { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba la palabra Terminal'); }
                         | TERMINAL error FLECHA_SIMPLE declaracion_terminal PUNTO_COMA                      { insertarError(this._$.first_line, this._$.first_column, 'Error en el símbolo terminal declarado'); }
-                        | TERMINAL TERMINAL_SYM error declaracion_terminal PUNTO_COMA                       { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo ->'); }
+                        | TERMINAL TERMINAL_SYM error declaracion_terminal PUNTO_COMA                       { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo <-'); }
                         //| TERMINAL TERMINAL_SYM FLECHA_SIMPLE error PUNTO_COMA                              { insertarError(this._$.first_line, this._$.first_column, 'Error en la asignación de valor al terminal'); }
                         | error PUNTO_COMA                                                                  { insertarError(this._$.first_line, this._$.first_column, 'Error en la definición del terminal'); }
                         | TERMINAL TERMINAL_SYM FLECHA_SIMPLE declaracion_terminal error                    { insertarError(this._$.first_line, this._$.first_column, 'Se esperaba un ;'); }

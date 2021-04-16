@@ -132,7 +132,7 @@ var wison = (function(){
      insertarError(this._$.first_line, this._$.first_column, 'Error en el símbolo terminal declarado'); 
     break;
     case 20:
-     insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo ->'); 
+     insertarError(this._$.first_line, this._$.first_column, 'Se esperaba el simbolo <-'); 
     break;
     case 21:
      insertarError(this._$.first_line, this._$.first_column, 'Error en la definición del terminal'); 
